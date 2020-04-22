@@ -21,12 +21,12 @@ public class ShoppingCartJdbcTemplate {
         public ShoppingCart mapRow(ResultSet rs, int rowNum) throws SQLException {
             ShoppingCart shoppingCart = new ShoppingCart();
 
-            shoppingCart.setId(rs.getLong("id"));
-            shoppingCart.setPetfoodId(rs.getLong("petfood_id"));
-            shoppingCart.setPetfoodBrand(rs.getString("petfood_brand"));
-            shoppingCart.setPetfoodName(rs.getString("petfood_name"));
-            shoppingCart.setPetfoodDescription(rs.getString("petfood_description"));
-            shoppingCart.setPetfoodPrice(rs.getBigDecimal("petfood_price"));
+            shoppingCart.setCartId(rs.getLong("id"));
+            shoppingCart.setId(rs.getLong("petfood_id"));
+            shoppingCart.setBrand(rs.getString("petfood_brand"));
+            shoppingCart.setName(rs.getString("petfood_name"));
+            shoppingCart.setDescription(rs.getString("petfood_description"));
+            shoppingCart.setPrice(rs.getBigDecimal("petfood_price"));
 
             return shoppingCart;
         }
@@ -40,7 +40,7 @@ public class ShoppingCartJdbcTemplate {
     //Add item into Cart
     public List<ShoppingCart> insert(ShoppingCart shoppingCart){
         jdbcTemplate.update("INSERT INTO shopping_cart (id, petfood_id, petfood_brand, petfood_name, petfood_description, petfood_price)"+"VALUES(?,?,?,?,?,?)",
-                new Object[] {shoppingCart.getId(),shoppingCart.getPetfoodId(),shoppingCart.getPetfoodBrand(),shoppingCart.getPetfoodName(),shoppingCart.getPetfoodDescription(),shoppingCart.getPetfoodPrice()});
+                new Object[] {shoppingCart.getCartId(),shoppingCart.getId(),shoppingCart.getBrand(),shoppingCart.getName(),shoppingCart.getDescription(),shoppingCart.getPrice()});
         return jdbcTemplate.query("SELECT * FROM shopping_cart ORDER BY id DESC LIMIT 1", new ShoppingCartRowMapper());
     }
 
